@@ -6,7 +6,7 @@ Requires at least: 4.0
 Tested up to: 4.2
 Stable tag: 1.0
 
-Easy, highly configurable Google XML Sitemaps
+Easy, highly configurable RSS and Google XML Sitemaps
 
 == Description ==
 
@@ -14,7 +14,7 @@ Easy, highly configurable Google XML Sitemaps
 
 **Features include:**
 
-* Supports HTML, RSS and Google XML Sitemap formats.
+* HTML, RSS and Google XML Sitemap formats.
 * List all your WordPress Pages, Posts, Archives, Authors, Categories and Tags.
 * Includes paged links for posts for Archives, Authors, Categories and Tags.
 * Set global sitemap default values for priorty and update frequencies.
@@ -28,13 +28,13 @@ Easy, highly configurable Google XML Sitemaps
 **New features**
 
 We're always seeking to improve and update. 
-Stay in touch via [facebook](https://www.facebook.com/XmlSitemapGenerator) and [Twitter] (https://twitter.com/createsitemaps)
+Stay in touch via [facebook](https://www.facebook.com/XmlSitemapGenerator) and [Twitter](https://twitter.com/createsitemaps)
 
 
 
 == Installation ==
 
-1. We recommend you install Google XML Sitemap Generator either via the WordPress.org plugin directory.
+1. We recommend you install Google XML Sitemap Generator via the WordPress.org plugin directory.
 2. After activating it just works!.
 3. Click the "settings" link to edit global settings.
 4. Configure tag, category, post and page level settings when adding / editing them.

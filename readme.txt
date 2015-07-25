@@ -35,7 +35,7 @@ Stay in touch via [facebook](https://www.facebook.com/XmlSitemapGenerator) and [
 == Installation ==
 
 1. We recommend you install Google XML Sitemap Generator via the WordPress.org plugin directory.
-2. After activating it just works!.
+2. After activating it just works!
 3. Click the "settings" link to edit global settings.
 4. Configure tag, category, post and page level settings when adding / editing them.
 5. It's that easy!

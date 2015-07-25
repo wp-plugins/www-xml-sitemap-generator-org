@@ -1,0 +1,54 @@
+<?php
+
+namespace xmlSitemapGenerator;
+
+
+
+class pinger
+{
+
+	public function doPing($tag = "manual")
+	{
+		$sitemapUrl = urlencode( get_bloginfo( 'url' ) .   '/xmlsitemap.xml');
+		$url = "http://www.google.com/webmasters/sitemaps/ping?sitemap=" . $sitemapUrl;
+		$response = core::doRequest($url);
+		core::statusUpdate("Google {$tag} ping - {$response}");
+
+		$url = "http://www.bing.com/ping?sitemap=" . $sitemapUrl;
+		$response = core::doRequest($url);
+		core::statusUpdate("Bing {$tag} ping - {$response}");
+	
+		update_option('xmsg_LastPing', time());
+	}
+	
+	public function doManualPing()
+	{
+		 $startTime =  microtime(true) ;
+		 self::doPing("Manual");
+		 $time = core::getTimeBand($startTime);
+		 core::updateStatistics("Ping", "Manual", $time);
+		
+	}
+	public function doAutoPings($date)
+	{
+		$startTime =  microtime(true) ;
+		$lasModified = dataAccess::getLastModified($date);
+		$lastPing = get_option('xmsg_LastPing');
+	 
+		if ($lastPing < $lasModified || !isset($lasModified ))
+		{
+			self::doPing("Auto");
+			update_option('xmsg_LastPing', date("Y-m-d H:i:s", time()+360));
+		}
+		else
+		{
+			core::statusUpdate("Auto ping skipped. No modified posts");
+		}
+		 $time = core::getTimeBand($startTime);
+		 core::updateStatistics("Ping", "AutoPing", $time);
+	}
+
+
+	
+}
+?>

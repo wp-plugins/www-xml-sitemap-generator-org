@@ -44,9 +44,9 @@ namespace xmlSitemapGenerator;
 		
 		function render($urls){
 			
-		  	//	  	ob_get_clean();
+		  	ob_get_clean();
 		 	ob_start();
-			//header('Content-Type: text/xml; charset=utf-8');
+			header('Content-Type: text/xml; charset=utf-8');
 			
 			echo '<?xml version="1.0" encoding="UTF-8" ?>';
 			echo  "\n";
@@ -180,11 +180,11 @@ namespace xmlSitemapGenerator;
 		
 		function render($urls){
 			
-	//	  	ob_get_clean();
+		  	ob_get_clean();
 			$url = get_bloginfo( 'url' ) . '/xmlsitemap.xsl';
 		
 		 	ob_start();
-			//header('Content-Type: text/xml; charset=utf-8');
+			header('Content-Type: text/xml; charset=utf-8');
 			
 			echo '<?xml version="1.0" encoding="UTF-8" ?>';
 			echo  "\n";
@@ -228,7 +228,7 @@ namespace xmlSitemapGenerator;
 		function render($urls){
 			
 		  	ob_get_clean();
-			//header('Content-Type: text/html; charset=utf-8');
+			header('Content-Type: text/html; charset=utf-8');
 		 	ob_start();
 			
 			
@@ -318,7 +318,7 @@ namespace xmlSitemapGenerator;
 		public function render($urls){
 			
 		  	ob_get_clean();
-			//header('Content-Type: text/xsl; charset=utf-8');
+			header('Content-Type: text/xsl; charset=utf-8');
 		 	ob_start();
 			
 			

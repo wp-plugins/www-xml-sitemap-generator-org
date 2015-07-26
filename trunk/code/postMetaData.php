@@ -48,6 +48,9 @@ class postMetaData
 		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
 		return $post_id;
 
+		if ( $parent_id = wp_is_post_revision( $post_id ) ) 
+		$post_id = $parent_id;
+
 		$settings = new metaSettings();
 		$settings->itemId = $post_id;
 		$settings->itemType = "post";

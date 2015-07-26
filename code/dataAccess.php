@@ -51,9 +51,7 @@ class dataAccess {
 				  UNIQUE KEY `idx_xsg_sitemap_meta_ItemId_ItemType` (`itemId`,`itemType`)
 				) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='generatated by XmlSitemapGenerator.org';";
 
-				
-
-		$cmd = $wpdb->prepare($cmd, $tableMeta);
+			
 		$wpdb->query($cmd);
 
 	}
@@ -64,15 +62,10 @@ class dataAccess {
 		$cmd = " SELECT * FROM {$tableMeta}
 				 WHERE itemId = %d AND itemType = %s ";
 		
-	
-		$cmd = $wpdb->prepare($cmd,$id,$type );
 		$settings = $wpdb->get_row($cmd);
 		
-			
 		if (!$settings) {return new metaSettings(); }
  		
- 
-		
 		return $settings ;
 	}
 	
@@ -97,11 +90,8 @@ class dataAccess {
 	 		
 		$cmd = $wpdb->prepare($cmd, $itemId, $itemType, $exclude, $priority , $frequency,$inherit);
 		
-		//echo "<h1>" . $cmd . "</h1>";
-		
 		$settings = $wpdb->query($cmd);
-		
-	 // 	exit( var_dump( $wpdb->last_query ) );
+	
 	}
 	
 	// type = "post" or "page" , date = "created" or "updated"
@@ -140,16 +130,9 @@ class dataAccess {
 		if ($limit > 0 ) 
 		{ 
 			$cmd .= " LIMIT {$limit} " ; 
-			$cmd = $wpdb->prepare($cmd, $date, $tableMeta, $limit);
-		}
-		else
-		{
-			$cmd = $wpdb->prepare($cmd, $date, $tableMeta);			
 		}
 
-		
-	
-		
+
 		$results = self::execute($cmd);
 		
 		return $results;				
@@ -173,8 +156,6 @@ class dataAccess {
 					LEFT JOIN {$tableMeta} as Meta ON Terms.term_Id = Meta.ItemId AND Meta.itemType = 'taxonomy' 
 				WHERE tax.taxonomy IN ('post_tag','category')
 				GROUP BY  Terms.term_id, Terms.name, Terms.slug, Terms.term_group, tax.description, tax.term_taxonomy_id,  tax.taxonomy, tax.description, Meta.exclude, Meta.priority, Meta.frequency";
-
-		$cmd = $wpdb->prepare($cmd, $date, $tableMeta);
 			
 		$results = self::execute($cmd);
 		 
@@ -196,8 +177,6 @@ class dataAccess {
 						AND posts.post_status = 'publish' AND Posts.post_password = ''
 				GROUP BY  users.user_nicename, users.user_login, users.display_name ";
 
-		$cmd = $wpdb->prepare($cmd, $date);
-			
 		$results = self::execute($cmd);
 		 
 		return $results;		
@@ -219,9 +198,6 @@ class dataAccess {
 			GROUP BY YEAR({$date}), MONTH({$date})
 			ORDER BY {$date} DESC";
 
-		$cmd = $wpdb->prepare($cmd);
-			
-		
 		$results = self::execute($cmd);
 		 
 		return $results;	
@@ -240,8 +216,6 @@ class dataAccess {
 		$cmd = "SELECT MAX({$date})
 				FROM {$wpdb->posts} as posts
 				WHERE post_status = 'publish'";
-
-		$cmd = $wpdb->prepare($cmd,$date);
 			
 		$date = $wpdb->get_var($cmd);
 		 
@@ -258,8 +232,6 @@ class dataAccess {
 		$cmd = "SELECT COUNT(*)
 				FROM {$wpdb->posts} as posts
 				WHERE post_status = 'publish'";
-
-	///	$cmd = $wpdb->prepare($cmd);
 			
 		$postCount = $wpdb->get_var($cmd);
 		 

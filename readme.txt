@@ -6,11 +6,11 @@ Requires at least: 4.0
 Tested up to: 4.2
 Stable tag: 1.0
 
-Easy, highly configurable RSS and Google XML Sitemaps
-
+Easy to use, highly configurable WordPress RSS and Google XML Sitemap generator plugin. Compatible with Google, Bing, Baidu, Yandex and more.
+ 
 == Description ==
 
-[Google XML Sitemap Generator](https://xmlsitemapgenerator.org/wordpress-sitemap-generator-plugin.aspx) adds powerful & configurable XML sitemap features to WordPress.
+[Google XML Sitemap Generator](https://xmlsitemapgenerator.org/wordpress-sitemap-generator-plugin.aspx) adds powerful and configurable RSS and Google XML sitemap features to WordPress. It enables you to set global sitemap defaults to get up and running quickly which can then be customised at the category, tag, post and page level.
 
 **Features include:**
 
@@ -24,12 +24,10 @@ Easy, highly configurable RSS and Google XML Sitemaps
 * Updates your Robots.txt file with sitemap entries.
 
 
-
 **New features**
 
 We're always seeking to improve and update. 
 Stay in touch via [facebook](https://www.facebook.com/XmlSitemapGenerator) and [Twitter](https://twitter.com/createsitemaps)
-
 
 
 == Installation ==

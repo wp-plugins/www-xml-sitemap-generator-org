@@ -157,7 +157,7 @@ class settings
 		
 			echo '<li><a target="_blank" href="' . $url .'/xmlsitemap.xml">XML Sitemap</a></li>';
 			echo '<li><a target="_blank" href="' . $url .'/rsssitemap.xml">RSS Sitemap</a></li>';
-			echo '<li><a target="_blank" href="' . $url .'/rssnewsitemap.xml">New Pages RSS</a></li>';
+			echo '<li><a target="_blank" href="' . $url .'/rsslatest.xml">New Pages RSS</a></li>';
 			echo '<li><a target="_blank" href="' . $url .'/robots.txt">Robots.txt</a></li>';
 		
 		?>

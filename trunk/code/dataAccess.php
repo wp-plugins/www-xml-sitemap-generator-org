@@ -40,8 +40,8 @@ class dataAccess {
 	public static function createMetaTable()
 	{
 		global $wpdb;		
-		$tableMeta = $wpdb->prefix . 'xsg_sitemap_meta';
-		$cmd = "CREATE TABLE IF NOT EXISTS `{$tableMeta}` (
+		$tablemeta = $wpdb->prefix . 'xsg_sitemap_meta';
+		$cmd = "CREATE TABLE IF NOT EXISTS `{$tablemeta}` (
 				  `itemId` int(11) DEFAULT '0',
 				  `inherit` int(11) DEFAULT '0',
 				  `itemType` varchar(8) DEFAULT '',
@@ -58,8 +58,8 @@ class dataAccess {
 	public static function getMetaItem($id, $type)
 	{
 		global $wpdb;
-		$tableMeta = $wpdb->prefix . 'xsg_sitemap_meta';
-		$cmd = " SELECT * FROM {$tableMeta}
+		$tablemeta = $wpdb->prefix . 'xsg_sitemap_meta';
+		$cmd = " SELECT * FROM {$tablemeta}
 				 WHERE itemId = %d AND itemType = %s ";
 		
 		$settings = $wpdb->get_row($cmd);
@@ -73,8 +73,8 @@ class dataAccess {
 	public static function saveMetaItem($metaItem)
 	{
 		global $wpdb;		
-		$tableMeta = $wpdb->prefix . 'xsg_sitemap_meta';
-		$cmd = " INSERT INTO {$tableMeta} (itemId, itemType, exclude, priority, frequency, inherit) 
+		$tablemeta = $wpdb->prefix . 'xsg_sitemap_meta';
+		$cmd = " INSERT INTO {$tablemeta} (itemId, itemType, exclude, priority, frequency, inherit) 
 				 VALUES(%d, %s, %d, %d, %d, %d) 
 						ON DUPLICATE KEY UPDATE 
 							exclude=VALUES(exclude), priority=VALUES(priority), frequency=VALUES(frequency), inherit=VALUES(inherit) ";
@@ -101,29 +101,29 @@ class dataAccess {
 		global $wpdb;
 		$date = self::getDateField($date);
  
-		$tableMeta = $wpdb->prefix . 'xsg_sitemap_meta';
+		$tablemeta = $wpdb->prefix . 'xsg_sitemap_meta';
 		
 		$cmd = "SELECT 
 				posts.*,   
-				PostMeta.*,  Tag_Meta.* , {$date} as sitemapDate
-				FROM {$wpdb->posts} as Posts 
-					LEFT JOIN {$tableMeta} as PostMeta ON Posts.Id = PostMeta.ItemId AND PostMeta.itemId
+				postmeta.*,  Tag_meta.* , {$date} as sitemapDate
+				FROM {$wpdb->posts} as posts 
+					LEFT JOIN {$tablemeta} as postmeta ON posts.Id = postmeta.ItemId AND postmeta.itemId
 					LEFT JOIN 
 							(SELECT  
-								Terms.object_id as Post_id,
-								Max(Meta.exclude) as tagExclude,
-								Max(Meta.priority) as tagPriority,
-								Max(Meta.frequency) as tagFrequency
-							FROM {$tableMeta} as Meta 
-								INNER JOIN {$wpdb->term_relationships} as Terms
-								ON  Meta.itemId = Terms.term_taxonomy_id
-							WHERE Meta.itemType = 'taxonomy' AND Meta.inherit = 1
+								terms.object_id as Post_id,
+								Max(meta.exclude) as tagExclude,
+								Max(meta.priority) as tagPriority,
+								Max(meta.frequency) as tagFrequency
+							FROM {$tablemeta} as meta 
+								INNER JOIN {$wpdb->term_relationships} as terms
+								ON  meta.itemId = terms.term_taxonomy_id
+							WHERE meta.itemType = 'taxonomy' AND meta.inherit = 1
 								
-							GROUP BY Terms.object_id 
-							) as Tag_Meta
-						ON Posts.Id = Tag_Meta.Post_id
+							GROUP BY terms.object_id 
+							) as Tag_meta
+						ON posts.Id = Tag_meta.Post_id
 				WHERE post_status = 'publish' AND (post_type = 'page' OR  post_type = 'post')   
-					AND Posts.post_password = ''
+					AND posts.post_password = ''
 				ORDER BY {$date} DESC  ";
 				 
 			
@@ -142,20 +142,20 @@ class dataAccess {
 
 		global $wpdb;
 		$date = self::getDateField($date);
-		$tableMeta = $wpdb->prefix . 'xsg_sitemap_meta';
-		$cmd = "SELECT  Terms.term_id, Terms.name, Terms.slug, Terms.term_group,
+		$tablemeta = $wpdb->prefix . 'xsg_sitemap_meta';
+		$cmd = "SELECT  terms.term_id, terms.name, terms.slug, terms.term_group,
 					tax.term_taxonomy_id,  tax.taxonomy, tax.description,   tax.description,
-						Meta.exclude, Meta.priority, Meta.frequency,
-						Max(Posts.{$date}) as sitemapDate,  Count(Posts.ID) as posts
+						meta.exclude, meta.priority, meta.frequency,
+						Max(posts.{$date}) as sitemapDate,  Count(posts.ID) as posts
 				  
-				FROM {$wpdb->terms} as Terms
-					INNER JOIN {$wpdb->term_relationships} as Relationships ON Terms.Term_id = Relationships.term_taxonomy_id
-					INNER JOIN {$wpdb->posts} as Posts ON Relationships.object_id = Posts.Id
-							AND Posts.post_status = 'publish' AND Posts.post_password = ''
-					INNER JOIN {$wpdb->term_taxonomy} as tax ON Terms.term_id = tax.term_id
-					LEFT JOIN {$tableMeta} as Meta ON Terms.term_Id = Meta.ItemId AND Meta.itemType = 'taxonomy' 
+				FROM {$wpdb->terms} as terms
+					INNER JOIN {$wpdb->term_relationships} as Relationships ON terms.Term_id = Relationships.term_taxonomy_id
+					INNER JOIN {$wpdb->posts} as posts ON Relationships.object_id = posts.Id
+							AND posts.post_status = 'publish' AND posts.post_password = ''
+					INNER JOIN {$wpdb->term_taxonomy} as tax ON terms.term_id = tax.term_id
+					LEFT JOIN {$tablemeta} as meta ON terms.term_Id = meta.ItemId AND meta.itemType = 'taxonomy' 
 				WHERE tax.taxonomy IN ('post_tag','category')
-				GROUP BY  Terms.term_id, Terms.name, Terms.slug, Terms.term_group, tax.description, tax.term_taxonomy_id,  tax.taxonomy, tax.description, Meta.exclude, Meta.priority, Meta.frequency";
+				GROUP BY  terms.term_id, terms.name, terms.slug, terms.term_group, tax.description, tax.term_taxonomy_id,  tax.taxonomy, tax.description, meta.exclude, meta.priority, meta.frequency";
 			
 		$results = self::execute($cmd);
 		 
@@ -169,12 +169,12 @@ class dataAccess {
 
 		global $wpdb;
 		$date = self::getDateField($date);
-		$tableMeta = $wpdb->prefix . 'xsg_sitemap_meta';
+		$tablemeta = $wpdb->prefix . 'xsg_sitemap_meta';
 	
 		$cmd = "SELECT  users.user_nicename, users.user_login, users.display_name ,
-					MAX(posts.{$date}) AS sitemapDate, 	Count(Posts.ID) as posts
+					MAX(posts.{$date}) AS sitemapDate, 	Count(posts.ID) as posts
 				FROM {$wpdb->users} users LEFT JOIN {$wpdb->posts} as posts ON users.Id = posts.post_author 
-						AND posts.post_status = 'publish' AND Posts.post_password = ''
+						AND posts.post_status = 'publish' AND posts.post_password = ''
 				GROUP BY  users.user_nicename, users.user_login, users.display_name ";
 
 		$results = self::execute($cmd);
@@ -192,9 +192,9 @@ class dataAccess {
 		$date = self::getDateField($date);
 		
 		$cmd = "SELECT DISTINCT YEAR({$date}) AS year,MONTH({$date}) AS month, 
-					MAX(posts.{$date}) AS sitemapDate, 	Count(Posts.ID) as posts
+					MAX(posts.{$date}) AS sitemapDate, 	Count(posts.ID) as posts
 			FROM {$wpdb->posts} as posts
-			WHERE post_status = 'publish' AND post_type = 'post' AND Posts.post_password = ''
+			WHERE post_status = 'publish' AND post_type = 'post' AND posts.post_password = ''
 			GROUP BY YEAR({$date}), MONTH({$date})
 			ORDER BY {$date} DESC";
 

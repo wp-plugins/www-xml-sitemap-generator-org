@@ -339,79 +339,7 @@ class settings
 
 </form>
 
-<script>
-		function setPayment(amount,term)
-		{	
-			if (term =='')
-			{
-				document.getElementById("paypalCdm").value = "_xclick";
-				document.getElementById("amount").value = amount;
-			}
-			else
-			{
-				document.getElementById("paypalCdm").value = "_xclick-subscriptions";
-				document.getElementById("t3").value = term;	
-				document.getElementById("a3").value = amount;	
-			}
-		}
-		function paymentChange()
-		{
-			var e = document.getElementById("paymetnTerm");
-			var value = e.options[e.selectedIndex].value;
-			switch(value) {
-				case "1":
-					setPayment(1,"M");
-					break;
-				case "2":
-					setPayment(2,"Y");
-					break;
-				case "3":
-					setPayment(5,"Y");
-					break;
-				case "4":
-					setPayment(10,"Y");
-					break;
-				case "5":
-					setPayment(1,"");
-					break;
-				case "6":
-					setPayment(2,"");
-					break;
-				case "7":
-					setPayment(5,"");
-					break;
-				case "8":
-					setPayment(10,"");
-					break;
-			    case "9":
-			        setPayment(20, "");
-			        break;
-			}
-		}
-	</script>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 
-<input id="paypalCdm" type="hidden" name="cmd" value="_xclick-subscriptions">
-<input type="hidden" id="a3"  name="a3" value="5.00">
-<input type="hidden" name="p3" value="1">
-<input type="hidden" id="t3" name="t3" value="Y">
-
-<input id="amount" type="hidden" name="amount" value="">
-
-<input type="hidden" name="business" value="GT3K2HD88M766">
-<input type="hidden" name="lc" value="GB">
-<input type="hidden" name="item_name" value="Help keep XML Sitemaps free.">
-<input type="hidden" name="no_note" value="0">
-<input type="hidden" name="no_shipping" value="1">
-<input type="hidden" name="rm" value="1">
-<input type="hidden" name="return" value="https://xmlsitemapgenerator.org/donated.aspx">
-<input type="hidden" name="cancel_return" value="https://xmlsitemapgenerator.org">
-<input type="hidden" name="currency_code" value="GBP">
-<input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">
-<input type="hidden" name="page_style" value="xml">
-
-
-</form>
 
 
 

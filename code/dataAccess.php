@@ -176,7 +176,7 @@ class dataAccess {
 		$cmd = "SELECT  users.user_nicename, users.user_login, users.display_name ,
 					MAX(posts.{$date}) AS sitemapDate, 	Count(posts.ID) as posts
 				FROM {$wpdb->users} users LEFT JOIN {$wpdb->posts} as posts ON users.Id = posts.post_author 
-						AND posts.post_status = 'publish' AND posts.post_password = ''
+						AND posts.post_type = 'post' AND posts.post_status = 'publish' AND posts.post_password = ''
 				GROUP BY  users.user_nicename, users.user_login, users.display_name ";
 
 		$results = self::execute($cmd);

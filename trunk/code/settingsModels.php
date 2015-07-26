@@ -43,7 +43,7 @@ class globalSettings {
 	public $pingSitemap = true; // daily sitemap ping
 	public $addToRobots = true; // add files to robots
 	public $sendStats = true; // send stats
-	public $smallCredit = false; //allow a credit in the sitemap footer
+	public $smallCredit = true; //allow a credit in the sitemap footer
 }
 
 class metaSettings

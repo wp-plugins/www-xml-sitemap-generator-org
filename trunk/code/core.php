@@ -12,7 +12,6 @@ include_once 'settingsModels.php';
 // settings for general operation and rendering
 
 
-
 class core {
 	
 	public static function pluginFilename() {
@@ -30,12 +29,12 @@ class core {
 					}
 					else return "0.ERROR";
 				}
-				$pluginData = get_plugin_data(self::pluginFilename(), false, false);
+				$pluginData = get_plugin_data(myPluginFile(), false, false);
 				$GLOBALS["xmsg_version"] = $data['Version'];				
 			} 
 			catch (Exception $e) 
 			{
-				$GLOBALS["xmsg_version"] = 999;
+				$GLOBALS["xmsg_version"] = "0.ERROR";
 			}
 
 			

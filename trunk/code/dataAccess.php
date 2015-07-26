@@ -62,6 +62,8 @@ class dataAccess {
 		$cmd = " SELECT * FROM {$tablemeta}
 				 WHERE itemId = %d AND itemType = %s ";
 		
+		$cmd = $wpdb->prepare($cmd, $id, $type);
+		
 		$settings = $wpdb->get_row($cmd);
 		
 		if (!$settings) {return new metaSettings(); }

@@ -22,14 +22,24 @@ class core {
 	public static function pluginVersion() {
 		if(!isset($GLOBALS["xmsg_version"])) 
 		{
-			if(!function_exists('get_plugin_data')) {
-				if(file_exists(ABSPATH . 'wp-admin/includes/plugin.php')) {
-					require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+			try
+			{
+				if(!function_exists('get_plugin_data')) {
+					if(file_exists(ABSPATH . 'wp-admin/includes/plugin.php')) {
+						require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+					}
+					else return "0.ERROR";
 				}
-				else return "0.ERROR";
+				$pluginData = get_plugin_data(self::pluginFilename(), false, false);
+				$GLOBALS["xmsg_version"] = $data['Version'];				
+			} 
+			catch (Exception $e) 
+			{
+				$GLOBALS["xmsg_version"] = 999;
 			}
-			$pluginData = get_plugin_data(self::pluginFilename(), false, false);
-			$GLOBALS["xmsg_version"] = $data['Version'];
+
+			
+
 		}
 		return $GLOBALS["xmsg_version"];
 	}
@@ -194,8 +204,12 @@ class core {
 	static function getStatusHtml()
 	{
 		$array = get_option('xmsg_Log');
-		return implode("<br />", $array);
-		
+		if (isset($array))
+		{
+			return implode("<br />", $array);
+		}
+		else
+		{ return "Log empty";}
 	}
 	function statusUpdate(  $statusMessage)
 	{	
@@ -253,11 +267,21 @@ class core {
 			);
 
 			$url = 'https://ssl.google-analytics.com/collect';
-			$response = wp_remote_post($url,
-				array(
-					'method' => 'POST',
-					'body' => $postData
-					));
+			
+			try
+			{
+				$response = wp_remote_post($url,
+					array(
+						'method' => 'POST',
+						'body' => $postData
+						));				
+			} 
+				catch (Exception $e) 
+			{
+				statusUpdate("sendStats : " . $e->getMessage());
+			}
+			
+
 		}
 	}
 }

@@ -107,7 +107,7 @@ class dataAccess {
 		
 		$cmd = "SELECT 
 				posts.*,   
-				postmeta.*,  Tag_meta.* , {$date} as sitemapDate
+				postmeta.*,  Tag_meta.* , UNIX_TIMESTAMP({$date}) as sitemapDate
 				FROM {$wpdb->posts} as posts 
 					LEFT JOIN {$tablemeta} as postmeta ON posts.Id = postmeta.ItemId AND postmeta.itemId
 					LEFT JOIN 
@@ -148,7 +148,7 @@ class dataAccess {
 		$cmd = "SELECT  terms.term_id, terms.name, terms.slug, terms.term_group,
 					tax.term_taxonomy_id,  tax.taxonomy, tax.description,   tax.description,
 						meta.exclude, meta.priority, meta.frequency,
-						Max(posts.{$date}) as sitemapDate,  Count(posts.ID) as posts
+						UNIX_TIMESTAMP(Max(posts.{$date})) as sitemapDate,  Count(posts.ID) as posts
 				  
 				FROM {$wpdb->terms} as terms
 					INNER JOIN {$wpdb->term_relationships} as Relationships ON terms.Term_id = Relationships.term_taxonomy_id
@@ -174,7 +174,7 @@ class dataAccess {
 		$tablemeta = $wpdb->prefix . 'xsg_sitemap_meta';
 	
 		$cmd = "SELECT  users.user_nicename, users.user_login, users.display_name ,
-					MAX(posts.{$date}) AS sitemapDate, 	Count(posts.ID) as posts
+					UNIX_TIMESTAMP(MAX(posts.{$date})) AS sitemapDate, 	Count(posts.ID) as posts
 				FROM {$wpdb->users} users LEFT JOIN {$wpdb->posts} as posts ON users.Id = posts.post_author 
 						AND posts.post_type = 'post' AND posts.post_status = 'publish' AND posts.post_password = ''
 				GROUP BY  users.user_nicename, users.user_login, users.display_name ";
@@ -194,7 +194,7 @@ class dataAccess {
 		$date = self::getDateField($date);
 		
 		$cmd = "SELECT DISTINCT YEAR({$date}) AS year,MONTH({$date}) AS month, 
-					MAX(posts.{$date}) AS sitemapDate, 	Count(posts.ID) as posts
+					UNIX_TIMESTAMP(MAX(posts.{$date})) AS sitemapDate, 	Count(posts.ID) as posts
 			FROM {$wpdb->posts} as posts
 			WHERE post_status = 'publish' AND post_type = 'post' AND posts.post_password = ''
 			GROUP BY YEAR({$date}), MONTH({$date})
@@ -215,7 +215,7 @@ class dataAccess {
 	
 		$date = self::getDateField($date);
 	 
-		$cmd = "SELECT MAX({$date})
+		$cmd = "SELECT UNIX_TIMESTAMP(MAX({$date}))
 				FROM {$wpdb->posts} as posts
 				WHERE post_status = 'publish'";
 			

@@ -384,7 +384,7 @@ include_once 'renderers.php';
 							$url->location = $pageUrl;		
 							$url->title = "Home page" ;
 							$url->description = get_option( 'blogdescription');;
-							$url->modified  =  $result->sitemapDate ;
+							$url->modified  =  dataAccess::getLastModified() ;
 							$url->priority =   $defaults->priority  ;	
 							$url->frequency  = $defaults->frequency ;					
 							

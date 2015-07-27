@@ -33,12 +33,12 @@ class pinger
 	{
 		$startTime =  microtime(true) ;
 		$lasModified = dataAccess::getLastModified($date);
-		$lastPing = get_option('xmsg_LastPing');
-	 
+		$lastPing = get_option('xmsg_LastPing',0);
+		// using UNIX times 
 		if ($lastPing < $lasModified || !isset($lasModified ))
 		{
 			self::doPing("Auto");
-			update_option('xmsg_LastPing', date("Y-m-d H:i:s", time()+360));
+			update_option('xmsg_LastPing', $lasModified);
 		}
 		else
 		{

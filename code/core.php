@@ -202,8 +202,9 @@ class core {
 
 	static function getStatusHtml()
 	{
-		$array = get_option('xmsg_Log');
-		if (isset($array))
+		$array = get_option('xmsg_Log',"");
+		
+		if (is_array($array))
 		{
 			return implode("<br />", $array);
 		}
@@ -215,7 +216,7 @@ class core {
 		//$title = strip_tags($title);
 		$statusMessage = strip_tags($statusMessage);
 		
-		$array = get_option('xmsg_Log');
+		$array = get_option('xmsg_Log',"");
 		if (!is_array($array)) {$array = array();}
 		$array = array_slice($array, 0, 19);		
 		$newLine = gmdate("M d Y H:i:s", time()) . " - <strong>" . $statusMessage . "</strong>"  ;

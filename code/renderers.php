@@ -38,7 +38,7 @@ namespace xmlSitemapGenerator;
 				echo '<title>'  . $url->title . '</title>';
 				echo '<link>'  . $url->location . '</link>';
 				echo '<description>' . $url->description . '</description>';
-				echo '<pubDate>' . $url->modified . '</pubDate>';
+				echo '<pubDate>' . date('Y-m-d\TH:i:s+00:00', $url->modified) . '</pubDate>';
 			 echo "</item>\n" ;
 		}
 		
@@ -165,7 +165,7 @@ namespace xmlSitemapGenerator;
 			
 			 echo '<url>'  ;
 				echo '<loc>'  . $url->location . '</loc>';
-				 echo '<lastmod>' . $url->modified . '</lastmod>';
+				 echo '<lastmod>' . date('Y-m-d\TH:i:s+00:00', $url->modified) . '</lastmod>';
 				 
 				 if (!$url->frequency==0) {
 					 echo '<changefreq>' .  $this->getFrequency($url->frequency) . '</changefreq>';

@@ -39,7 +39,7 @@ namespace xmlSitemapGenerator;
 				echo '<title>'  . $url->title . '</title>';
 				echo '<link>'  . $url->location . '</link>';
 				echo '<description>' . $url->description . '</description>';
-				echo '<pubDate>' . date(DATE_RFC822, $url->modified) . '</pubDate>';
+				echo '<pubDate>' . date(DATE_RSS, $url->modified) . '</pubDate>';
 			 echo "</item>\n" ;
 		}
 		

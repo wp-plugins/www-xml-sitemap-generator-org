@@ -12,6 +12,7 @@ include_once 'settingsModels.php';
 // settings for general operation and rendering
 
 
+	
 class core {
 	
 	public static function pluginFilename() {
@@ -52,7 +53,11 @@ class core {
 		flush_rewrite_rules();
 		
 		add_option( "wpXSG_MapId", uniqid("",true) );
+		update_option( "xmsg_LastPing", 0 );
+		
 		self::updateStatistics("Plugin","Activate", "");
+		
+		core::doPing();
 	}
 	
 	public static function deactivatePlugin() {
@@ -66,9 +71,8 @@ class core {
 		add_filter('plugin_row_meta', array(__CLASS__, 'filter_plugin_row_meta'),10,2);
 		add_action('do_robots', array(__CLASS__, 'addRobotLinks'), 100, 0);
 		add_action('wp_head', array(__CLASS__, 'addRssLink'),100);
-		add_action('xmsg_ping', array(__CLASS__, 'doPing'), 10, 1);
-		
-		
+
+
 		// only include admin files when necessary.
 		if (is_admin()) 
 		{
@@ -81,10 +85,14 @@ class core {
 	
 		}
 
-
-		if (!wp_get_schedule('xmsg_ping')) {
-			wp_schedule_event(time()  , 'daily', 'xmsg_ping');
+	
+		
+		if (!wp_get_schedule('xmsg_ping')) 
+		{
+			wp_schedule_event(time() + 60 , 'daily', 'xmsg_ping');
 		}
+
+		add_action('xmsg_ping', array(__CLASS__, 'doPing'));
 		
 		// NB Network activation will not have set up the rules for the site.
 		// Check if they exist and then reactivate.
@@ -100,12 +108,10 @@ class core {
 		$globalSettings =   get_option( "wpXSG_global"   , new globalSettings()  );
 		
 		if ($globalSettings->pingSitemap == true)
-		{
+		{		
 			$sitemapDefaults =  get_option( "wpXSG_sitemapDefaults"   , new sitemapDefaults()  );
-		 
 			pinger::doAutoPings($sitemapDefaults->dateField);
 		}
-		
 		
 	}
 	
@@ -119,7 +125,7 @@ class core {
 		} 
 			catch (Exception $e) 
 		{
-		// echo 'Caught exception: ',  $e->getMessage(), "\n";
+
 		}
 	}
 	public static function addQueryVariableHooks(){ 
@@ -213,14 +219,15 @@ class core {
 	}
 	function statusUpdate(  $statusMessage)
 	{	
-		//$title = strip_tags($title);
+	
 		$statusMessage = strip_tags($statusMessage);
 		
-		$array = get_option('xmsg_Log',"");
+		$array  = get_option('xmsg_Log',"");
 		if (!is_array($array)) {$array = array();}
 		$array = array_slice($array, 0, 19);		
 		$newLine = gmdate("M d Y H:i:s", time()) . " - <strong>" . $statusMessage . "</strong>"  ;
-		array_unshift($array , $newLine);		
+		array_unshift($array , $newLine);	
+
 		update_option('xmsg_Log', $array);
 	}
 	  function doRequest($url) {

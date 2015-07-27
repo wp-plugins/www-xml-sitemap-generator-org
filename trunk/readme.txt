@@ -4,7 +4,7 @@ Tags: title, xml, rss, sitemap, yandex, metaboxes, google, bing, yahoo, baidu
 Donate link: https://XmlSitemapGenerator.org/donate.aspx
 Requires at least: 4.0
 Tested up to: 4.2
-Stable tag: 1.0
+
 
 Easy to use, highly configurable WordPress RSS and Google XML Sitemap generator plugin. Compatible with Google, Bing, Baidu, Yandex and more.
  
@@ -50,9 +50,18 @@ Stay in touch via [facebook](https://www.facebook.com/XmlSitemapGenerator) and [
 
 == Changelog ==
 
+= 1.1 =
+Release Date: July 27nd, 2015
+
+* Fix : RSS sitemap date format issue
+* Fix : XML sitemap date issue
+* Fix : Pagination counting pages
+* Fix : Logging null value error
+* Fix : Ping issues
+
 = 1.0 =
 Release Date: July 23rd, 2015
 Release Post: http://blog.xmlsitemapgenerator.org/2015/07/wordpress-xml-sitemap-generator.html
 
-* Enhancement: Initial release
+* Initial release
 

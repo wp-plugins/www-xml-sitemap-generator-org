@@ -2,7 +2,7 @@
 
 namespace xmlSitemapGenerator;
 
-
+include_once 'dataAccess.php';
 
 class pinger
 {
@@ -35,7 +35,7 @@ class pinger
 		$lasModified = dataAccess::getLastModified($date);
 		$lastPing = get_option('xmsg_LastPing',0);
 		// using UNIX times 
-		if ($lastPing < $lasModified || !isset($lasModified ))
+		if ($lastPing < $lasModified )
 		{
 			self::doPing("Auto");
 			update_option('xmsg_LastPing', $lasModified);

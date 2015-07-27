@@ -35,10 +35,11 @@ namespace xmlSitemapGenerator;
 		{
 			
 			 echo '<item>'  ;
+				echo '<guid>'  . $url->location . '</guid>';
 				echo '<title>'  . $url->title . '</title>';
 				echo '<link>'  . $url->location . '</link>';
 				echo '<description>' . $url->description . '</description>';
-				echo '<pubDate>' . date('Y-m-d\TH:i:s+00:00', $url->modified) . '</pubDate>';
+				echo '<pubDate>' . date(DATE_RFC822, $url->modified) . '</pubDate>';
 			 echo "</item>\n" ;
 		}
 		
@@ -56,10 +57,12 @@ namespace xmlSitemapGenerator;
 			echo  "\n";
 			echo  '<channel>';
 			echo  "\n";
-			
-			echo '<title>'  . $url->title . '</title>';
-			echo '<link>'  . $url->location . '</link>';
-			echo '<description>' . $url->description . '</description>';
+	
+
+											
+			echo '<title>'  . get_option('blogname') . '</title>';
+			echo '<link>'  . get_bloginfo( 'url' ) . '</link>';
+			echo '<description>' . get_option( 'blogdescription'). '</description>';
 			
 			echo  "\n";
 			foreach( $urls as $url ) 

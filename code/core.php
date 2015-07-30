@@ -89,7 +89,8 @@ class core {
 		
 		if (!wp_get_schedule('xmsg_ping')) 
 		{
-			wp_schedule_event(time() + 60 , 'daily', 'xmsg_ping');
+			// ping in 2 hours from when setup.
+			wp_schedule_event(time() + 60*60*2 , 'daily', 'xmsg_ping');
 		}
 
 		add_action('xmsg_ping', array(__CLASS__, 'doPing'));

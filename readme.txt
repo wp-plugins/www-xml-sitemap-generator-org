@@ -3,7 +3,7 @@ Contributors: XmlSitemapGenerator
 Tags: title, xml, rss, sitemap, yandex, metaboxes, google, bing, yahoo, baidu
 Donate link: https://XmlSitemapGenerator.org/donate.aspx
 Requires at least: 4.0
-Tested up to: 4.2
+Tested up to: 4.3
 Stable tag: 1.1
 
 
